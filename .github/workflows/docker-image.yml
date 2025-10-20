@@ -1,4 +1,4 @@
-name: Docker Image CI
+.name: Docker Image CI
 
 on:
   push:
@@ -23,6 +23,6 @@ jobs:
     - name: Login to GH Docker
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u ${{ github.actor }} --password-stdin ${{ env.REGISTRY }}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ GO_VER }} --build-arg GOVER=${{ GO_VER }}
+      run: docker build . --file Dockerfile --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ env.GO_VER }} --build-arg GOVER=${{ env.GO_VER }}
     - name: Push the Docker image
-      run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ GO_VER }}
+      run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GO_VER }}
