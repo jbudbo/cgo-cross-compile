@@ -13,5 +13,3 @@ WORKDIR /src
 VOLUME [ "/src", "/out" ]
 
 ENV CGO_ENABLED=1
-
-ENTRYPOINT [ "/bin/bash" ]
