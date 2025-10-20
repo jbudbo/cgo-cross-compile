@@ -8,18 +8,21 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-
+  GO_VER: 1.25.3
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
     steps:
     - uses: actions/checkout@v4
     - name: Login to GH Docker
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u ${{ github.actor }} --password-stdin ${{ env.REGISTRY }}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:1.25.3 --build-arg GOVER=1.25.3
+      run: docker build . --file Dockerfile --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ GO_VER }} --build-arg GOVER=${{ GO_VER }}
     - name: Push the Docker image
-      run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:1.25.3
+      run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ GO_VER }}
